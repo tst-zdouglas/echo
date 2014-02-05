@@ -1,3 +1,4 @@
+import time
 
 import thrift
 import thrift.protocol.TBinaryProtocol
