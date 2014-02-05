@@ -9,8 +9,7 @@ import echo.Echo
 
 class Server(object):
     class Handler(object):
-        def echo(self, metas, *a, **kw):
-            print metas, a, kw
+        def echo(self, metas):
             return metas
 
     def start(self):
@@ -41,16 +40,18 @@ def squawk():
         TBinaryProtocolAccelerated(trans)
     client = echo.Echo.Client(prot)
     trans.open()
-    client.echo(
-        metas=[
-            echo.ttypes.Meta(
-                k=str(n),
-                t=n,
-                v=str(vtyp(n))
-            )
-            for n
-            in xrange(6)
-        ]
+    metas = [
+        echo.ttypes.Meta(
+            k=str(n),
+            t=n,
+            v=str(vtyp(n))
+        )
+        for n
+        in xrange(6)
+    ]
+    print metas
+    print client.echo(
+        metas=metas
     )
     trans.close()
 
@@ -59,8 +60,8 @@ if __name__ == '__main__':
     import signal
     import time
     pid = os.fork()
-    if not pid:
-        Server().start()
-    time.sleep(3)
-    squawk()
-    os.kill(pid, signal.SIGKILL)
+    if pid:
+        time.sleep(3)
+        squawk()
+        os.kill(pid, signal.SIGKILL)
+    Server().start()
