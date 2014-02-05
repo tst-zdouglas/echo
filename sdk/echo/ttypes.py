@@ -3,7 +3,7 @@
 #
 # DO NOT EDIT UNLESS YOU ARE SURE THAT YOU KNOW WHAT YOU ARE DOING
 #
-#  options string: py:new_style,utf8strings
+#  options string: py:new_style
 #
 
 from thrift.Thrift import TType, TMessageType, TException, TApplicationException
@@ -33,7 +33,7 @@ class Meta(object):
 
   def read(self, iprot):
     if iprot.__class__ == TBinaryProtocol.TBinaryProtocolAccelerated and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None and fastbinary is not None:
-      fastbinary.decode_binary(self, iprot.trans, (self.__class__, self.thrift_spec), True)
+      fastbinary.decode_binary(self, iprot.trans, (self.__class__, self.thrift_spec))
       return
     iprot.readStructBegin()
     while True:
@@ -42,7 +42,7 @@ class Meta(object):
         break
       if fid == -1:
         if ftype == TType.STRING:
-          self.k = iprot.readString().decode('utf-8')
+          self.k = iprot.readString();
         else:
           iprot.skip(ftype)
       elif fid == -2:
@@ -62,7 +62,7 @@ class Meta(object):
 
   def write(self, oprot):
     if oprot.__class__ == TBinaryProtocol.TBinaryProtocolAccelerated and self.thrift_spec is not None and fastbinary is not None:
-      oprot.trans.write(fastbinary.encode_binary(self, (self.__class__, self.thrift_spec), True))
+      oprot.trans.write(fastbinary.encode_binary(self, (self.__class__, self.thrift_spec)))
       return
     oprot.writeStructBegin('Meta')
     if self.v is not None:
@@ -75,7 +75,7 @@ class Meta(object):
       oprot.writeFieldEnd()
     if self.k is not None:
       oprot.writeFieldBegin('k', TType.STRING, -1)
-      oprot.writeString(self.k.encode('utf-8'))
+      oprot.writeString(self.k)
       oprot.writeFieldEnd()
     oprot.writeFieldStop()
     oprot.writeStructEnd()
