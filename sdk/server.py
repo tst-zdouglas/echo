@@ -55,12 +55,4 @@ def ping():
     trans.close()
 
 if __name__ == '__main__':
-    import os
-    import signal
-    import time
-    pid = os.fork()
-    if pid:
-        time.sleep(3)
-        ping()
-        os.kill(pid, signal.SIGKILL)
     Server().start()
