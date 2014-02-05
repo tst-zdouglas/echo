@@ -21,7 +21,7 @@ class Server(object):
         thrift.server.TServer.TForkingServer(proc, trans, tfact, pfact).serve()
 
 
-def squawk():
+def ping():
     def vtyp(n):
         if n % 2:
             if n % 3:
@@ -61,6 +61,6 @@ if __name__ == '__main__':
     pid = os.fork()
     if pid:
         time.sleep(3)
-        squawk()
+        ping()
         os.kill(pid, signal.SIGKILL)
     Server().start()
